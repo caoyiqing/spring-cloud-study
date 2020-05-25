@@ -1,0 +1,31 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-peer
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+eureka:
+  instance:
+    # 服务注册中心实例的主机名
+    hostname: localhost
+    instance-id: dev
+  client:
+    ##检索服务
+    fetch-registry: false
+    ##是否将自己注册到eureka
+    register-with-eureka: false
+    ##客户端默认去这个地址找注册中心
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    ### 当eureka启动时，不能从集群节点中获取到instance注册信息，应该等多久
+    wait-time-in-ms-when-sync-empty: 0
+    # 自我保护机制
+    enable-self-preservation: true
+    ###eureka多长时间更新一次数据
+    peer-eureka-nodes-update-interval-ms: 10000
